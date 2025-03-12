@@ -16,10 +16,12 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-//////////
+//
 const userRoutes = require("./Routes/userRoutes");
 app.use("/api/user", userRoutes);
-/////////
+// Yeni Account (para işlemleri) route’u
+const accountRoutes = require("./Routes/accountRoutes");
+app.use("/api/account", accountRoutes);
 
 app.get("/", (req, res) => {
   res.send("Bank API Çalışıyor!");

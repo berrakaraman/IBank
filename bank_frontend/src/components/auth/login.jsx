@@ -1,8 +1,9 @@
+// src/components/Auth/Login.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -16,8 +17,7 @@ const Login = () => {
     try {
       const res = await api.post("/api/user/login", formData);
       if (res.data.token) {
-        localStorage.setItem("token", res.data.token);
-        setMessage("Giriş başarılı!");
+        onLogin(res.data.token);
         navigate("/dashboard");
       }
     } catch (error) {
@@ -27,7 +27,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div style={{ padding: "20px" }}>
       <h2>Giriş</h2>
       <form onSubmit={handleSubmit}>
         <div>
