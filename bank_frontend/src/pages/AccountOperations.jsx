@@ -10,10 +10,6 @@ const AccountOperations = () => {
   const [message, setMessage] = useState("");
   const [balance, setBalance] = useState(null);
 
-<<<<<<< HEAD
-  // Eğer token yoksa login sayfasına yönlendir
-=======
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -29,10 +25,7 @@ const AccountOperations = () => {
       setBalance(res.data.balance);
     } catch (error) {
       console.error("Hesap bilgisi alınırken hata:", error);
-<<<<<<< HEAD
-      // Yetkisiz ise login sayfasına yönlendir
-=======
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
+
       if (error.response && error.response.status === 401) {
         navigate("/login");
       }

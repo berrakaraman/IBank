@@ -1,6 +1,6 @@
 // bank_backend/middleware/role.js
 
-//role işlemlerini yap, kısıtlamalar yap!!
+//role işlemlerini yap, kısıtlamalar yap?
 
 module.exports = function (allowedRoles) {
   return (req, res, next) => {

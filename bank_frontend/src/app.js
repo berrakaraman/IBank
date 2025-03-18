@@ -13,16 +13,7 @@ import Transfer from "./pages/transfer";
 import AccountOperations from "./pages/AccountOperations";
 //import NotFound from "./pages/NotFound/NotFound";
 import Navbar from "./components/layout/navbar";
-<<<<<<< HEAD
 
-const App = () => {
-  // Başlangıçta localStorage'da token varsa isAuthenticated true olur
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem("token")
-  );
-
-  // Login başarılı olduğunda çağrılan fonksiyon
-=======
 import Deposit from "./pages/deposit";
 import TransactionHistory from "./pages/TransactionHistory";
 import AccountSettings from "./pages/AccountSettings";
@@ -32,16 +23,11 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
     !!localStorage.getItem("token")
   );
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
   const handleLogin = (token) => {
     localStorage.setItem("token", token);
     setIsAuthenticated(true);
   };
 
-<<<<<<< HEAD
-  // Logout işlemi gerçekleştiğinde çağrılan fonksiyon
-=======
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsAuthenticated(false);
@@ -83,8 +69,6 @@ const App = () => {
           }
         />
         <Route
-<<<<<<< HEAD
-=======
           path="/deposit"
           element={isAuthenticated ? <Deposit /> : <Navigate to="/login" />}
         />
@@ -107,7 +91,6 @@ const App = () => {
           }
         />
         <Route
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
           path="*"
           element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />}
         />
