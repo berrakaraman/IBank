@@ -16,6 +16,10 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
     try {
       const res = await api.post("/api/user/login", formData);
+<<<<<<< HEAD
+=======
+      console.log("Login token:", res.data.token);
+>>>>>>> c6c4b34 (döviz işlemleri eklendi)
       if (res.data.token) {
         onLogin(res.data.token);
         navigate("/dashboard");

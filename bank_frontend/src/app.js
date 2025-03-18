@@ -13,6 +13,7 @@ import Transfer from "./pages/transfer";
 import AccountOperations from "./pages/AccountOperations";
 //import NotFound from "./pages/NotFound/NotFound";
 import Navbar from "./components/layout/navbar";
+<<<<<<< HEAD
 
 const App = () => {
   // Başlangıçta localStorage'da token varsa isAuthenticated true olur
@@ -21,12 +22,26 @@ const App = () => {
   );
 
   // Login başarılı olduğunda çağrılan fonksiyon
+=======
+import Deposit from "./pages/deposit";
+import TransactionHistory from "./pages/TransactionHistory";
+import AccountSettings from "./pages/AccountSettings";
+import CurrencyExchange from "./pages/CurrencyExchange";
+
+const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    !!localStorage.getItem("token")
+  );
+>>>>>>> c6c4b34 (döviz işlemleri eklendi)
   const handleLogin = (token) => {
     localStorage.setItem("token", token);
     setIsAuthenticated(true);
   };
 
+<<<<<<< HEAD
   // Logout işlemi gerçekleştiğinde çağrılan fonksiyon
+=======
+>>>>>>> c6c4b34 (döviz işlemleri eklendi)
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsAuthenticated(false);
@@ -68,6 +83,31 @@ const App = () => {
           }
         />
         <Route
+<<<<<<< HEAD
+=======
+          path="/deposit"
+          element={isAuthenticated ? <Deposit /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/transactions"
+          element={
+            isAuthenticated ? <TransactionHistory /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/account-settings"
+          element={
+            isAuthenticated ? <AccountSettings /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/currency-exchange"
+          element={
+            isAuthenticated ? <CurrencyExchange /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+>>>>>>> c6c4b34 (döviz işlemleri eklendi)
           path="*"
           element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />}
         />

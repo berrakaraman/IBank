@@ -1,4 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+<<<<<<< HEAD
+=======
+// src/pages/Transfer/Transfer.jsx
+>>>>>>> c6c4b34 (döviz işlemleri eklendi)
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
@@ -8,9 +12,14 @@ const Transfer = () => {
   const [targetEmail, setTargetEmail] = useState("");
   const [amount, setAmount] = useState("");
   const [message, setMessage] = useState("");
+<<<<<<< HEAD
   const [balance, setBalance] = useState(null);
 
   // Eğer token yoksa kullanıcıyı login sayfasına yönlendir
+=======
+  const [balances, setBalances] = useState(null);
+
+>>>>>>> c6c4b34 (döviz işlemleri eklendi)
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -23,7 +32,11 @@ const Transfer = () => {
   const fetchAccount = async () => {
     try {
       const res = await api.get("/api/account");
+<<<<<<< HEAD
       setBalance(res.data.balance);
+=======
+      setBalances(res.data.balances);
+>>>>>>> c6c4b34 (döviz işlemleri eklendi)
     } catch (error) {
       console.error("Hesap bilgisi alınırken hata:", error);
       if (error.response && error.response.status === 401) {
@@ -39,7 +52,11 @@ const Transfer = () => {
         amount: Number(amount),
       });
       setMessage(res.data.msg);
+<<<<<<< HEAD
       setBalance(res.data.balance);
+=======
+      setBalances(res.data.balances);
+>>>>>>> c6c4b34 (döviz işlemleri eklendi)
       setTargetEmail("");
       setAmount("");
     } catch (error) {
@@ -53,8 +70,23 @@ const Transfer = () => {
     <div style={{ padding: "20px" }}>
       <h2>EFT İşlemi</h2>
       <div>
+<<<<<<< HEAD
         <strong>Mevcut Bakiye: </strong>
         <span>{balance !== null ? balance : "Yükleniyor..."}</span>
+=======
+        <strong>Mevcut Bakiyeler: </strong>
+        {balances ? (
+          <ul>
+            {Object.entries(balances).map(([currency, amt]) => (
+              <li key={currency}>
+                {currency}: {amt.toFixed(2)}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          "Yükleniyor..."
+        )}
+>>>>>>> c6c4b34 (döviz işlemleri eklendi)
       </div>
       <div style={{ marginTop: "20px" }}>
         <label>Hedef E-Posta: </label>
@@ -65,7 +97,11 @@ const Transfer = () => {
         />
       </div>
       <div style={{ marginTop: "20px" }}>
+<<<<<<< HEAD
         <label>Miktar: </label>
+=======
+        <label>Miktar (TL): </label>
+>>>>>>> c6c4b34 (döviz işlemleri eklendi)
         <input
           type="number"
           value={amount}

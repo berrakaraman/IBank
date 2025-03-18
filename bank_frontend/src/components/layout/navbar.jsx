@@ -28,11 +28,47 @@ const Navbar = ({ onLogout }) => {
           Dashboard
         </Link>
         <Link
+<<<<<<< HEAD
+=======
+          to="/deposit"
+          style={{ color: "#fff", textDecoration: "none", marginRight: "20px" }}
+        >
+          Para Yatır
+        </Link>
+        <Link
+>>>>>>> c6c4b34 (döviz işlemleri eklendi)
           to="/transfer"
           style={{ color: "#fff", textDecoration: "none", marginRight: "20px" }}
         >
           EFT İşlemleri
         </Link>
+<<<<<<< HEAD
+=======
+        <Link
+          to="/currency-exchange"
+          style={{ color: "#fff", textDecoration: "none", marginRight: "20px" }}
+        >
+          Döviz İşlemleri
+        </Link>
+        <Link
+          to="/investment-price"
+          style={{ color: "#fff", textDecoration: "none", marginRight: "20px" }}
+        >
+          Varlık Fiyat Sorgula
+        </Link>
+        <Link
+          to="/transactions"
+          style={{ color: "#fff", textDecoration: "none", marginRight: "20px" }}
+        >
+          İşlem Geçmişi
+        </Link>
+        <Link
+          to="/account-settings"
+          style={{ color: "#fff", textDecoration: "none", marginRight: "20px" }}
+        >
+          Hesap Ayarları
+        </Link>
+>>>>>>> c6c4b34 (döviz işlemleri eklendi)
       </div>
       <button
         onClick={handleLogout}

@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 //MongoDB bağlantısını yönetmek için
 
 const mongoose = require("mongoose"); //Mongoose kütüphanesini dahil ediyoruz.
+=======
+//MongoDB bağlantısı
+const mongoose = require("mongoose");
+>>>>>>> c6c4b34 (döviz işlemleri eklendi)
 require("dotenv").config();
 
 const connectDB = async () => {

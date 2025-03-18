@@ -1,19 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// src/pages/AccountOperations.jsx
+// src/pages/Deposit/Deposit.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
-const AccountOperations = () => {
+const Deposit = () => {
   const navigate = useNavigate();
   const [amount, setAmount] = useState("");
   const [message, setMessage] = useState("");
-  const [balance, setBalance] = useState(null);
+  const [balances, setBalances] = useState(null);
 
-<<<<<<< HEAD
-  // Eğer token yoksa login sayfasına yönlendir
-=======
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
+  // Hesap bilgilerini (çoklu para birimi) çek
+  const fetchAccount = async () => {
+    try {
+      const res = await api.get("/api/account");
+      setBalances(res.data.balances);
+    } catch (error) {
+      console.error("Hesap bilgisi alınırken hata:", error);
+      if (error.response && error.response.status === 401) {
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -23,29 +33,13 @@ const AccountOperations = () => {
     }
   }, [navigate]);
 
-  const fetchAccount = async () => {
-    try {
-      const res = await api.get("/api/account");
-      setBalance(res.data.balance);
-    } catch (error) {
-      console.error("Hesap bilgisi alınırken hata:", error);
-<<<<<<< HEAD
-      // Yetkisiz ise login sayfasına yönlendir
-=======
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
-      if (error.response && error.response.status === 401) {
-        navigate("/login");
-      }
-    }
-  };
-
   const handleDeposit = async () => {
     try {
       const res = await api.post("/api/account/deposit", {
         amount: Number(amount),
       });
       setMessage(res.data.msg);
-      setBalance(res.data.balance);
+      setBalances(res.data.balances);
       setAmount("");
     } catch (error) {
       setMessage(
@@ -54,41 +48,34 @@ const AccountOperations = () => {
     }
   };
 
-  const handleWithdraw = async () => {
-    try {
-      const res = await api.post("/api/account/withdraw", {
-        amount: Number(amount),
-      });
-      setMessage(res.data.msg);
-      setBalance(res.data.balance);
-      setAmount("");
-    } catch (error) {
-      setMessage(
-        error.response?.data?.msg || "Para çekme sırasında hata oluştu"
-      );
-    }
-  };
-
   return (
     <div style={{ padding: "20px" }}>
-      <h2>Para İşlemleri</h2>
+      <h1>Para Yatırma</h1>
       <div>
-        <strong>Mevcut Bakiye: </strong>
-        <span>{balance !== null ? balance : "Yükleniyor..."}</span>
+        <h2>Mevcut Bakiyeler:</h2>
+        {balances ? (
+          <ul>
+            {Object.entries(balances).map(([currency, bal]) => (
+              <li key={currency}>
+                {currency}: {bal.toFixed(2)}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          "Yükleniyor..."
+        )}
       </div>
       <div style={{ marginTop: "20px" }}>
-        <label>Miktar: </label>
+        <label>Yatırılacak Miktar (TL): </label>
         <input
           type="number"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
+          placeholder="Miktar giriniz"
         />
       </div>
       <div style={{ marginTop: "20px" }}>
         <button onClick={handleDeposit}>Para Yatır</button>
-        <button onClick={handleWithdraw} style={{ marginLeft: "10px" }}>
-          Para Çek
-        </button>
       </div>
       {message && (
         <div style={{ marginTop: "20px", color: "blue" }}>{message}</div>
@@ -97,4 +84,4 @@ const AccountOperations = () => {
   );
 };
 
-export default AccountOperations;
+export default Deposit;
