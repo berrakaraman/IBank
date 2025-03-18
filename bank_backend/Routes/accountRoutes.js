@@ -1,20 +1,12 @@
-<<<<<<< HEAD
-=======
 // bank_backend/Routes/accountRoutes.js
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
 const Account = require("../Models/account");
 const User = require("../Models/user");
-<<<<<<< HEAD
-
-// Para Yatırma (Deposit) Endpoint
-=======
 const axios = require("axios");
 
 // Para Yatırma
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
 router.post("/deposit", auth, async (req, res) => {
   try {
     const { amount } = req.body;
@@ -25,19 +17,6 @@ router.post("/deposit", auth, async (req, res) => {
     }
     let account = await Account.findOne({ user: req.user.id });
     if (!account) {
-<<<<<<< HEAD
-      // Eğer hesap yoksa, oluşturuyoruz.
-      account = new Account({
-        user: req.user.id,
-        balance: 0,
-        transactions: [],
-      });
-    }
-    account.balance += amount;
-    account.transactions.push({ type: "deposit", amount });
-    await account.save();
-    res.json({ msg: "Para yatırma başarılı", balance: account.balance });
-=======
       //çalışmıyor BAK!
       account = new Account({
         user: req.user.id,
@@ -50,19 +29,14 @@ router.post("/deposit", auth, async (req, res) => {
     account.transactions.push({ type: "deposit", amount, currency: "TRY" });
     await account.save();
     res.json({ msg: "Para yatırma başarılı", balances: account.balances });
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
   } catch (error) {
     console.error("Deposit Hatası:", error);
     res.status(500).json({ msg: "Sunucu hatası" });
   }
 });
 
-<<<<<<< HEAD
-// Para Çekme (Withdraw) Endpoint
-=======
 // Para Çekme
 //web tarafına ekle bunu
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
 router.post("/withdraw", auth, async (req, res) => {
   try {
     const { amount } = req.body;
@@ -75,15 +49,6 @@ router.post("/withdraw", auth, async (req, res) => {
     if (!account) {
       return res.status(400).json({ msg: "Hesap bulunamadı" });
     }
-<<<<<<< HEAD
-    if (account.balance < amount) {
-      return res.status(400).json({ msg: "Yetersiz bakiye" });
-    }
-    account.balance -= amount;
-    account.transactions.push({ type: "withdrawal", amount });
-    await account.save();
-    res.json({ msg: "Para çekme başarılı", balance: account.balance });
-=======
     if (account.balances.TRY < amount) {
       return res.status(400).json({ msg: "Yetersiz bakiye" });
     }
@@ -91,20 +56,15 @@ router.post("/withdraw", auth, async (req, res) => {
     account.transactions.push({ type: "withdrawal", amount, currency: "TRY" });
     await account.save();
     res.json({ msg: "Para çekme başarılı", balances: account.balances });
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
   } catch (error) {
     console.error("Withdrawal Hatası:", error);
     res.status(500).json({ msg: "Sunucu hatası" });
   }
 });
 
-<<<<<<< HEAD
-// Kullanıcı Hesap Bilgilerini Getirme Endpoint (Opsiyonel)
-=======
 // Kullanıcı Hesap Bilgilerini Getirme
 
 // ADMİN ROLU İÇİN YAP
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
 router.get("/", auth, async (req, res) => {
   try {
     const account = await Account.findOne({ user: req.user.id });
@@ -117,19 +77,12 @@ router.get("/", auth, async (req, res) => {
     res.status(500).json({ msg: "Sunucu hatası" });
   }
 });
-<<<<<<< HEAD
-// EFT (Para Transferi) Endpoint
-router.post("/eft", auth, async (req, res) => {
-  try {
-    const { amount, targetEmail } = req.body;
-=======
 
 // EFT
 router.post("/eft", auth, async (req, res) => {
   try {
     const { amount, targetEmail } = req.body;
     //kontroller
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
     if (!amount || amount <= 0) {
       return res
         .status(400)
@@ -139,21 +92,6 @@ router.post("/eft", auth, async (req, res) => {
       return res.status(400).json({ msg: "Hedef hesap bilgisi eksik" });
     }
 
-<<<<<<< HEAD
-    // Sender (gönderen) hesabını al
-    let senderAccount = await Account.findOne({ user: req.user.id });
-    if (!senderAccount) {
-      return res.status(400).json({ msg: "Gönderen hesap bulunamadı" });
-    }
-    if (senderAccount.balance < amount) {
-      return res.status(400).json({ msg: "Yetersiz bakiye" });
-    }
-
-    // Sender'ın bilgilerini al (not için)
-    const senderUser = await User.findById(req.user.id);
-
-    // Hedef kullanıcıyı (alıcı) email ile bul
-=======
     let senderAccount = await Account.findOne({ user: req.user.id });
     //kontroller
     if (!senderAccount) {
@@ -164,44 +102,19 @@ router.post("/eft", auth, async (req, res) => {
     }
 
     const senderUser = await User.findById(req.user.id);
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
     const recipientUser = await User.findOne({ email: targetEmail });
     if (!recipientUser) {
       return res.status(400).json({ msg: "Hedef kullanıcı bulunamadı" });
     }
-<<<<<<< HEAD
-
-    // Hedef kullanıcının hesabını al veya oluştur
-=======
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
     let recipientAccount = await Account.findOne({ user: recipientUser._id });
     if (!recipientAccount) {
       recipientAccount = new Account({
         user: recipientUser._id,
-<<<<<<< HEAD
-        balance: 0,
-=======
         balances: { TRY: 0, USD: 0, EUR: 0, GBP: 0, CHF: 0 },
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
         transactions: [],
       });
     }
 
-<<<<<<< HEAD
-    // Gönderen hesaptan para çek ve işlemi kaydet
-    senderAccount.balance -= amount;
-    senderAccount.transactions.push({
-      type: "withdrawal",
-      amount,
-      note: `EFT gönderildi to ${targetEmail}`,
-    });
-
-    // Hedef hesaba para ekle ve işlemi kaydet
-    recipientAccount.balance += amount;
-    recipientAccount.transactions.push({
-      type: "deposit",
-      amount,
-=======
     senderAccount.balances.TRY -= amount;
     senderAccount.transactions.push({
       type: "withdrawal",
@@ -214,26 +127,19 @@ router.post("/eft", auth, async (req, res) => {
       type: "deposit",
       amount,
       currency: "TRY",
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
       note: `EFT alındı from ${senderUser.email}`,
     });
 
     await senderAccount.save();
     await recipientAccount.save();
 
-<<<<<<< HEAD
-    res.json({ msg: "EFT işlemi başarılı", balance: senderAccount.balance });
-=======
     res.json({ msg: "EFT işlemi başarılı", balances: senderAccount.balances });
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
   } catch (error) {
     console.error("EFT Hatası:", error);
     res.status(500).json({ msg: "Sunucu hatası" });
   }
 });
 
-<<<<<<< HEAD
-=======
 //bunu biraz daha düşün belki bir şey bulursun
 router.post("/convert", auth, async (req, res) => {
   try {
@@ -325,5 +231,4 @@ router.get("/transactions", auth, async (req, res) => {
   }
 });
 
->>>>>>> c6c4b34 (döviz işlemleri eklendi)
 module.exports = router;
